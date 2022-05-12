@@ -1,4 +1,4 @@
-const Employee = require("../../src/employee")
+const Employee = require("../lib/employee")
 
 describe('Testing Employee Class', () => {
 
@@ -58,6 +58,5 @@ describe('Testing Employee Class', () => {
             expect(true).toBe(false);
         })
     })
-    it('Should first')
-})
+});
 
