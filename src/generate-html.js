@@ -8,7 +8,7 @@ function generateCard(employee){
       specialAttribute = `<li>Office No: ${employee.getOfficeNumber()}</li>`;
   }
   if(employee.getRole() === 'Engineer'){
-      specialAttribute = `<li>GitHub: ${employee.getGithub()}</li>`;
+      specialAttribute = `<li>GitHub: <a href="https://github.com/${employee.getGithub()}" target="_blank">${employee.getGithub()}</a></li>`;
   }
   if(employee.getRole() === 'Intern'){
       specialAttribute = `<li>School: ${employee.getSchool()}</li>`;
@@ -29,7 +29,8 @@ function generateCard(employee){
         <li>Role: ${employee.getRole()} </li>
 
         <!-- email -->
-        <li>Email: ${employee.getEmail() } </li>
+        
+        <li>Email: <a href="mailto:${employee.getEmail()}">${employee.getEmail() } </a></li>
 
         <!-- special attr -->
         ${ specialAttribute }
@@ -57,15 +58,28 @@ function generateHtml(employees){
         cards.push(card)
     }
     
-    
     // combine all the cards into a big string
     const joined = cards.join("");
 
-    // read template.html
-
-    // replace {{ body }} with joined
-
     // return the whole html
+    return `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+      <title>Document</title>
+    </head>
+    <body>
+      <div class="jumbotron jumbotron-fluid d-flex bg-danger text-light justify-content-center">
+        <h1 class="display-4">My Team</h1>
+      </div>
+    
+        ${joined}
+    
+    </div> 
+    </body>
+    </html>`
 
 
 }

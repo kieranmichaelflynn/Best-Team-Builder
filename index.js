@@ -35,7 +35,7 @@ function prompt() {
         },
         {
         type: 'input',
-        name: 'officeNum',
+        name: 'officeNumber',
         message: 'What is your office number?',
         when: (answers) => answers.role === "Manager"
         },
@@ -87,7 +87,7 @@ function prompt() {
                     answers.name,
                     answers.id,
                     answers.email,
-                    answers.intern
+                    answers.school
                 )
             );
         }
@@ -97,8 +97,9 @@ function prompt() {
         }else{
             // generate html based on the members added
             const html = generateHtml(employees);
+            const outputPath = path.join(__dirname, 'dist', 'index.html')
 
-            fs.writeFileSync(__dirname + '/dist/output.html', html, 'utf-8');
+            fs.writeFileSync(outputPath, html, 'utf-8');
 
             process.exit(0);
         }
