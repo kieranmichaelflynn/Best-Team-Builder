@@ -1,81 +1,144 @@
-const employee = require('./lib/employee');
-const engineer = require('./lib/engineer');
-const intern = require('./lib/intern');
-const manager = require('./lib/manager');
 const inquirer = require('inquirer');
 const fs = require('fs');
+const path = require('path');
+const generateHtml = require('./src/generate-html');
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern');
+const Manager = require('./lib/manager');
 
-// Use writeFileSync method to use promises instead of a callback function
 
-const promptUser = () => {
-  return inquirer.prompt([
-    {
-      type: 'input',
-      name: 'name',
-      message: 'What is your name?',
-    },
-    {
-      type: 'input',
-      name: 'role',
-      message: 'What is your role?',
-    },
-    {
-      type: 'input',
-      name: 'manager',
-      message: 'Who is your manager?',
-    },
-    {
-      type: 'input',
-      name: 'github',
-      message: 'Enter your GitHub Username',
-    },
-  ]);
-};
+let employees = [];
 
-const generateHTML = ({ name, location, github, linkedin }) =>
-  `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <title>Document</title>
-</head>
-<body>
-  <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Hi! My name is ${name}</h1>
-    <p class="lead">I am from ${location}.</p>
-    <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-    <ul class="list-group">
-      <li class="list-group-item">My GitHub username is ${github}</li>
-      <li class="list-group-item">LinkedIn: ${linkedin}</li>
-    </ul>
-  </div>
-</div>
-</body>
-</html>`;
+function prompt() {
+
+    return inquirer.prompt([
+        {
+        type: 'list',
+        name: 'role',
+        message: 'Who do you want to add?',
+        choices: ["Manager", "Engineer", "Intern"],
+        },
+        {
+        type: 'input',
+        name: 'name',
+        message: 'What is your name?',
+        },
+        {
+        type: 'input',
+        name: 'id',
+        message: 'What is your employee id?',
+        },
+        {
+        type: 'input',
+        name: 'email',
+        message: 'What is your email?',
+        },
+        {
+        type: 'input',
+        name: 'officeNum',
+        message: 'What is your office number?',
+        when: (answers) => answers.role === "Manager"
+        },
+        {
+            type: "input",
+            name: "github",
+            message: "What is your GitHub username?",
+            when: (answers) => answers.role === "Engineer",
+        },
+        {
+            type: "input",
+            name: "school",
+            message: "What is your school?",
+            when: (answers) => answers.role === "Intern",
+        },
+        {
+            type: "confirm",
+            name: "addAgain",
+            message: "Would you like to add a new member?",
+        }
+    ]).then((answers) => {
+    
+        // create new employee
+        if(answers.role === 'Manager'){
+            employees.push(
+                new Manager(
+                    answers.name, 
+                    answers.id, 
+                    answers.email, 
+                    answers.officeNumber
+                )
+            );
+        }
+
+        if (answers.role === "Engineer") {
+            employees.push(
+                new Engineer(
+                    answers.name,
+                    answers.id,
+                    answers.email,
+                    answers.github
+                )
+            );
+        }
+    
+        if (answers.role === "Intern") {
+            employees.push(
+                new Intern(
+                    answers.name,
+                    answers.id,
+                    answers.email,
+                    answers.intern
+                )
+            );
+        }
+
+        if(answers.addAgain){
+            return prompt();
+        }else{
+            // generate html based on the members added
+            const html = generateHtml(employees);
+
+            fs.writeFileSync(__dirname + '/dist/output.html', html, 'utf-8');
+
+            process.exit(0);
+        }
+    });
+}
+
+prompt();
+
+// const generateHTML = ({ name, role, manager, linkedin }) =>
+
+// `<!DOCTYPE html>
+// <html lang="en">
+// <head>
+//   <meta charset="UTF-8">
+//   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+//   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+//   <title>Document</title>
+// </head>
+// <body>
+//   <div class="jumbotron jumbotron-fluid d-flex bg-danger text-light justify-content-center">
+//     <h1 class="display-4">My Team</h1>
+//   </div>
+
+
+// </div> 
+// </body>
+// </html>`;
 
 // Bonus using writeFileSync as a promise
-const init = () => {
-  promptUser()
-    // Use writeFileSync method to use promises instead of a callback function
-    .then((answers) => fs.writeFileSync('index.html', generateHTML(answers)))
-    .then(() => console.log('Successfully wrote to index.html'))
-    .catch((err) => console.error(err));
-};
+// const init = () => {
+//     const outputPath = path.join(__dirname, 'dist', 'index.html')
+//     promptUser()
 
-init();
+//     // Use writeFileSync method to use promises instead of a callback function
+//     .then((answers) => fs.writeFileSync(outputPath, generateHTML(answers)))
+//     .then(() => console.log('Successfully wrote to index.html'))
+//     .catch((err) => console.error(err));
+// };
 
-// Ask questions
-// Every team needs to have at least 1 manager
-    // Who is the manager
-    // What team members are to be added
-        // Choose from engineer, manager, intern
-    // Repeat until user selected exit
-
-
-
+// init();
     
 // - Manual testing
     // User trawls through code to manually debug and find + fix errors

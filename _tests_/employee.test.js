@@ -3,10 +3,13 @@ const Employee = require("../lib/employee")
 describe('Testing Employee Class', () => {
 
     describe('Employee class contaions the attribute and methods needed', () => {
+    
+        // source of truth
 
         const defaultName = "Kieran";
         const defaultEmail = "Kieran@gmail.com";
         const defaultId = "12";
+        const defaultRole = "Employee"
 
         // Happy path
         test('If we can instantiate an object from the class', () => {
@@ -19,44 +22,71 @@ describe('Testing Employee Class', () => {
             // Execute the code
             // Compare the result
 
-        })
+        });
         test('Should fail if didnt pass in exactly 3 arguments', () => {
-        expect(() => new Employee()).toThrow(Error);
-        expect(() => new Employee(defaultId)).toThrow(Error);
-        expect(() => new Employee(defaultId, defaultName)).toThrow(Error);
-        })
-        test('Employee class to accept 3 arguments in the constructor: id, email, name', () => {
-                expect(Employee.email).toBe(defaultEmail);
-        })
-        test('If employee has email', () => {
-            expect(true).toBe(false);
-        })
-        test('Should have name', () => {
-            expect(true).toBe(false);
-        })
-        test('Should have ID', () => {
-            expect(true).toBe(false);
-        })
-        test('getName() should return name', () => {
-            expect(true).toBe(false);
-        })
-        test('getID() should return ID', () => {
-            expect(true).toBe(false);
-        })
-        test('getEmail() should return Email', () => {
-            expect(true).toBe(false);
-        })
+            expect(() => new Employee()).toThrow(Error);
+            expect(() => new Employee(defaultId)).toThrow(Error);
+            expect(() => new Employee(defaultId, defaultName)).toThrow(Error);
+        });
+        it('can set a name property in the constructor', () => {
+            const employee = new Employee(defaultName, defaultId, defaultEmail);
+            expect(employee.name).toBe(defaultName);
+        });
 
-        // Sad path
-        test('Should break if I did not pass in any argument to the constructor', () => {
-            expect(true).toBe(false);
-        })
-        test('Should break if I pass more than 4 arguments to the constructor', () => {
-            expect(true).toBe(false);
-        })
-        test('Should only receive a valid email', () => {
-            expect(true).toBe(false);
-        })
-    })
+        // take in the id arg, and set as property
+        it("can set a id property in the constructor", () => {
+            const employee = new Employee(defaultName, defaultId, defaultEmail);
+            expect(employee.id).toBe(defaultId);
+        });
+        // take in the email arg, and set as property
+        it("can set a email property in the constructor", () => {
+            const employee = new Employee(defaultName, defaultId, defaultEmail);
+            expect(employee.email).toBe(defaultEmail);
+        });
+
+        it('can get the employee name by calling getName()', () => {
+
+            // replicate
+            const employee = new Employee(defaultName, defaultId, defaultEmail);
+
+            const result = employee.getName();
+
+            expect(result).toBe(defaultName);
+
+        });
+
+
+        // test getEmail()
+        it("can get the employee email by calling getEmail()", () => {
+
+            // replicate
+            const employee = new Employee(defaultName, defaultId, defaultEmail);
+
+            const result = employee.getEmail();
+
+            expect(result).toBe(defaultEmail);
+        });
+
+        // test getId()
+        it("can get the employee id by calling getId()", () => {
+       
+            // replicate
+            const employee = new Employee(defaultName, defaultId, defaultEmail);
+
+            const result = employee.getId();
+
+            expect(result).toBe(defaultId);
+        });
+
+        // test getRole()
+        it("can get the employee role by calling getRole()", () => {
+
+            // replicate
+            const employee = new Employee(defaultName, defaultId, defaultEmail);
+
+            const result = employee.getRole();
+
+            expect(result).toBe(defaultRole);
+        });
+    });
 });
-
