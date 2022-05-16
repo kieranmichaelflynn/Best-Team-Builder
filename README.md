@@ -1,5 +1,5 @@
 
-# Team Profile Generator
+# Best Team Builder
 
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
@@ -20,7 +20,7 @@ This application is a handy tool designed to quickly and easily sort a workforce
 2. Open your command line and navigate to the index.js file location. 
 3. Run npm init -y 
 4. Run npm install 
-5. Finally, run node index.js to run the application from your command line interface
+5. You're ready to use the Best Team Builder!
 
 ## Usage
 
@@ -33,9 +33,9 @@ This project is created under the MIT license
 This project was created by [kieranmichaelflynn](https://github.com/kieranmichaelflynn)
 
 ## Questions
-To see it yourself, visit my GitHub repository at https://github.com/kieranmichaelflynn/Team-Profile-Generator
+To see it yourself, visit my GitHub repository at https://github.com/kieranmichaelflynn/Best-Team-Builder
 
 If you have any further questions, reach out to me at kieranmichaelflynn@gmail.com 
 
-Thank you for reading, enjoy Team Profile Generator!
+Thank you for reading, enjoy Best Team Builder!
     
