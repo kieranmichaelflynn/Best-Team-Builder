@@ -3,15 +3,21 @@
 function generateCard(employee) {
 
     let specialAttribute = "";
+    let specialIcon = "";
 
     if (employee.getRole() === 'Manager') {
         specialAttribute = `<li class="list-group-item">Office No: ${employee.getOfficeNumber()}</li>`;
+        specialIcon = "📋";
     }
     if (employee.getRole() === 'Engineer') {
         specialAttribute = `<li class="list-group-item">GitHub: <a href="https://github.com/${employee.getGithub()}" target="_blank">${employee.getGithub()}</a></li>`;
+        specialIcon = "⚙️";
+
     }
     if (employee.getRole() === 'Intern') {
         specialAttribute = `<li class="list-group-item">School: ${employee.getSchool()}</li>`;
+        specialIcon = "🎓";
+
     }
 
     return `
@@ -19,7 +25,7 @@ function generateCard(employee) {
     
     <div class="card-body">
     <h3 class="card-title">${employee.getName()}</h3>
-    <h5 class="card-title">${employee.getRole()}</h5>
+    <h5 class="card-title">${specialIcon}${employee.getRole()}</h5>
     <p class="card-text">
     <ul class="list-group">
        
@@ -72,10 +78,12 @@ function generateHtml(employees) {
       <div class="jumbotron jumbotron-fluid d-flex bg-primary text-light justify-content-center">
         <h1 class="display-4">My Team</h1>
       </div>
-    
-        ${joined}
-    
-    </div> 
+      <div class="row d-flex justify-content-center">  
+
+      ${joined}
+      
+      </div>
+    </div>
     </body>
     </html>`
 
