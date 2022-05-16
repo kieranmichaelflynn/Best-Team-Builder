@@ -2,7 +2,7 @@ const Engineer = require("../lib/engineer")
 
 describe('Testing engineer Class', () => {
 
-    describe('Engineer class contaions the attribute and methods needed', () => {
+    describe('Engineer class contains the attribute and methods needed', () => {
 
         // Source of truth
         const defaultName = "Trevor";
